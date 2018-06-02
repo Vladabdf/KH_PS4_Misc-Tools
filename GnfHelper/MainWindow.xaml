@@ -1,0 +1,42 @@
+﻿<Window x:Class="GnfHelper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GnfHelper"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="GnfConversionHelper" Height="375" Width="600">
+    <Window.Resources>
+        <local:EnumConverter x:Key="ImageTypeConverter"/>
+        <ObjectDataProvider x:Key="ImageTypes"
+                    MethodName="GetValues" 
+                    ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local:ImageType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <GroupBox Header="Files" Grid.Row="0">
+            <StackPanel>
+                <ListBox Height="200" ItemsSource="{Binding Images}" SelectedItem="{Binding SelectedImage}" DisplayMemberPath="FilePath" />
+                <Button Content="Add..." x:Name="btnAddFiles" Click="btnAddFiles_Click"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Options" Grid.Row="1">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Image format: "/>
+                    <ComboBox Width="200" ItemsSource="{Binding Source={StaticResource ImageTypes}}" SelectedValue="{Binding SelectedImage.ImgType, Converter={StaticResource ImageTypeConverter}, ConverterParameter={x:Type local:ImageType}}"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <Button Grid.Row="2" Margin="0,10,0,0" Content="Convert" x:Name="btnConvert" Click="btnConvert_Click"/>
+    </Grid>
+</Window>
