@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text;
+using System.Windows.Forms;
 
 namespace ShimEx
 {
@@ -26,7 +27,7 @@ namespace ShimEx
                 reader.BaseStream.Position = 4;
                 var files = reader.ReadInt32();
 
-                var saved = Path.Combine(Path.GetDirectoryName(file), Path.GetFileName(file.Replace(".", "_")));
+                var saved = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath));
 
                 Directory.CreateDirectory(saved);
 
